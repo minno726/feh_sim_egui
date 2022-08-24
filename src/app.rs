@@ -2,18 +2,9 @@ use egui::{RichText, Vec2, Widget};
 use strum::EnumCount;
 use crate::types::*;
 
-const BANNER_TYPES: [&'static str; 6] = [
-    "Normal (3%/3%)",
-    "Hero fest (5%/3%)",
-    "Weekly revival (4%/2%)",
-    "Legendary (8%/0%)",
-    "Legendary Remix (6%/0%)",
-    "Double Special (6%/0%)",
-];
-
-fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
+fn default_units(banner_type: BannerType) -> Option<Vec<Unit>> {
     match banner_type {
-        1 => Some(vec![
+        BannerType::HeroFest => Some(vec![
             Unit {
                 name: "".into(),
                 placeholder_name: true,
@@ -39,7 +30,7 @@ fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
                 fourstar_focus: false,
             },
         ]),
-        3 => Some(vec![
+        BannerType::Legendary => Some(vec![
             Unit {
                 name: "".into(),
                 placeholder_name: true,
@@ -113,7 +104,7 @@ fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
                 fourstar_focus: false,
             },
         ]),
-        4 | 5 => Some(vec![
+        BannerType::LegendaryRemix | BannerType::DoubleSpecial => Some(vec![
             Unit {
                 name: "".into(),
                 placeholder_name: true,
@@ -362,7 +353,7 @@ struct Unit {
 }
 
 pub struct TemplateApp {
-    banner_type: usize,
+    banner_type: BannerType,
     banner_selected: usize,
     banner_units: Vec<Unit>,
 
@@ -378,7 +369,7 @@ pub struct TemplateApp {
 impl Default for TemplateApp {
     fn default() -> Self {
         Self {
-            banner_type: 0,
+            banner_type: BannerType::Normal,
             banner_selected: 0,
             banner_units: Vec::new(),
             goal_is_multiple: false,
@@ -451,7 +442,7 @@ impl eframe::App for TemplateApp {
                                 .changed()
                             {
                                 if *selected_banner != 0 {
-                                    *banner_type = current_banners[*selected_banner].1;
+                                    *banner_type = BannerType::from_repr(current_banners[*selected_banner].1).unwrap();
                                     *banner_units = current_banners[*selected_banner].2.clone();
                                 }
                                 *goal_multiple = banner_units
@@ -460,14 +451,16 @@ impl eframe::App for TemplateApp {
                                     .collect();
                             }
                             ui.add_enabled_ui(*selected_banner == 0, |ui| {
+                                let mut selected = *banner_type as usize;
                                 if egui::ComboBox::from_id_source("Banner type")
                                     .width(200.0)
                                     .selected_text(format!("{:?}", banner_type))
-                                    .show_index(ui, banner_type, BANNER_TYPES.len(), |i| {
-                                        BANNER_TYPES[i].into()
+                                    .show_index(ui, &mut selected, BannerType::COUNT, |i| {
+                                        format!("{}", BannerType::from_repr(i).unwrap())
                                     })
                                     .changed()
                                 {
+                                    *banner_type = BannerType::from_repr(selected).unwrap();
                                     if let Some(new_units) = default_units(*banner_type) {
                                         *banner_units = new_units;
                                     }
@@ -512,7 +505,7 @@ impl eframe::App for TemplateApp {
                                                     unit.color = Color::from_repr(selected).unwrap();
                                             }
                                             let can_have_fourstar_focus =
-                                                *banner_type == 0 || *banner_type == 5;
+                                                *banner_type == BannerType::Normal || *banner_type == BannerType::DoubleSpecial;
                                             unit.fourstar_focus =
                                                 unit.fourstar_focus && can_have_fourstar_focus;
                                             ui.add_enabled(
