@@ -1,4 +1,6 @@
 use egui::{RichText, Vec2, Widget};
+use strum::EnumCount;
+use crate::types::*;
 
 const BANNER_TYPES: [&'static str; 6] = [
     "Normal (3%/3%)",
@@ -8,7 +10,6 @@ const BANNER_TYPES: [&'static str; 6] = [
     "Legendary Remix (6%/0%)",
     "Double Special (6%/0%)",
 ];
-const COLORS: [&'static str; 4] = ["Red", "Blue", "Green", "Colorless"];
 
 fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
     match banner_type {
@@ -16,25 +17,25 @@ fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 0,
+                color: Color::Red,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 1,
+                color: Color::Blue,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 2,
+                color: Color::Green,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 3,
+                color: Color::Colorless,
                 fourstar_focus: false,
             },
         ]),
@@ -42,73 +43,73 @@ fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 0,
+                color: Color::Red,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 0,
+                color: Color::Red,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 0,
+                color: Color::Red,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 1,
+                color: Color::Blue,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 1,
+                color: Color::Blue,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 1,
+                color: Color::Blue,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 2,
+                color: Color::Green,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 2,
+                color: Color::Green,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 2,
+                color: Color::Green,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 3,
+                color: Color::Colorless,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 3,
+                color: Color::Colorless,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 3,
+                color: Color::Colorless,
                 fourstar_focus: false,
             },
         ]),
@@ -116,49 +117,49 @@ fn default_units(banner_type: usize) -> Option<Vec<Unit>> {
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 0,
+                color: Color::Red,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 0,
+                color: Color::Red,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 1,
+                color: Color::Blue,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 1,
+                color: Color::Blue,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 2,
+                color: Color::Green,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 2,
+                color: Color::Green,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 3,
+                color: Color::Colorless,
                 fourstar_focus: false,
             },
             Unit {
                 name: "".into(),
                 placeholder_name: true,
-                color: 3,
+                color: Color::Colorless,
                 fourstar_focus: false,
             },
         ]),
@@ -176,25 +177,25 @@ fn current_banners() -> Vec<(String, usize, Vec<Unit>)> {
                 Unit {
                     name: "Múspell".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Nifl".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Ascendant Fjorm".into(),
                     placeholder_name: false,
-                    color: 2,
+                    color: Color::Green,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Ascendant Laegjarn".into(),
                     placeholder_name: false,
-                    color: 3,
+                    color: Color::Colorless,
                     fourstar_focus: false,
                 },
             ],
@@ -206,25 +207,25 @@ fn current_banners() -> Vec<(String, usize, Vec<Unit>)> {
                 Unit {
                     name: "Thief Leila".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Thief Cath".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Thief Sothe".into(),
                     placeholder_name: false,
-                    color: 2,
+                    color: Color::Green,
                     fourstar_focus: true,
                 },
                 Unit {
                     name: "Thief Nina".into(),
                     placeholder_name: false,
-                    color: 3,
+                    color: Color::Colorless,
                     fourstar_focus: false,
                 },
             ],
@@ -236,49 +237,49 @@ fn current_banners() -> Vec<(String, usize, Vec<Unit>)> {
                 Unit {
                     name: "Hríd".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Legendary Eirika".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Naga".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Ascendant Idunn".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Thrasir".into(),
                     placeholder_name: false,
-                    color: 2,
+                    color: Color::Green,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Gunnthrá".into(),
                     placeholder_name: false,
-                    color: 2,
+                    color: Color::Green,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Legendary Alm".into(),
                     placeholder_name: false,
-                    color: 3,
+                    color: Color::Colorless,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Ascendant Joshua".into(),
                     placeholder_name: false,
-                    color: 3,
+                    color: Color::Colorless,
                     fourstar_focus: false,
                 },
             ],
@@ -290,19 +291,19 @@ fn current_banners() -> Vec<(String, usize, Vec<Unit>)> {
                 Unit {
                     name: "Fallen Ike".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Say'ri".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Female Kris".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
             ],
@@ -314,37 +315,37 @@ fn current_banners() -> Vec<(String, usize, Vec<Unit>)> {
                 Unit {
                     name: "Laegjarn".into(),
                     placeholder_name: false,
-                    color: 0,
+                    color: Color::Red,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Ylgr".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Surtr".into(),
                     placeholder_name: false,
-                    color: 2,
+                    color: Color::Green,
                     fourstar_focus: false,
                 },
             ],
         ),
         (
             "This one has a very long name so that I can test out how the UI looks".into(),
-            1,
+            0,
             vec![
                 Unit {
                     name: "The unit also has a very long name, which is silly".into(),
                     placeholder_name: false,
-                    color: 1,
+                    color: Color::Blue,
                     fourstar_focus: false,
                 },
                 Unit {
                     name: "Not this one".into(),
                     placeholder_name: false,
-                    color: 2,
+                    color: Color::Green,
                     fourstar_focus: false,
                 },
             ],
@@ -356,7 +357,7 @@ fn current_banners() -> Vec<(String, usize, Vec<Unit>)> {
 struct Unit {
     name: String,
     placeholder_name: bool,
-    color: usize,
+    color: Color,
     fourstar_focus: bool,
 }
 
@@ -477,10 +478,10 @@ impl eframe::App for TemplateApp {
                                     // Auto-name the units that the user hasn't given an explicit name to
                                     if unit.placeholder_name {
                                         unit.name = format!(
-                                            "{} {}",
-                                            COLORS[unit.color], lowest_free_placeholder[unit.color]
+                                            "{:?} {}",
+                                            unit.color, lowest_free_placeholder[unit.color as usize]
                                         );
-                                        lowest_free_placeholder[unit.color] += 1;
+                                        lowest_free_placeholder[unit.color as usize] += 1;
                                     }
                                     ui.group(|ui| {
                                         ui.horizontal(|ui| {
@@ -499,14 +500,17 @@ impl eframe::App for TemplateApp {
                                             }
                                         });
                                         ui.horizontal(|ui| {
-                                            egui::ComboBox::from_id_source(("banner_unit", idx))
+                                            let mut selected = unit.color as usize;
+                                            if egui::ComboBox::from_id_source(("banner_unit", idx))
                                                 .selected_text(format!("{:?}", unit.color))
                                                 .show_index(
                                                     ui,
-                                                    &mut unit.color,
-                                                    COLORS.len(),
-                                                    |i| COLORS[i].into(),
-                                                );
+                                                    &mut selected,
+                                                    Color::COUNT,
+                                                    |i| format!("{:?}", Color::from_repr(i).unwrap()),
+                                                ).changed() {
+                                                    unit.color = Color::from_repr(selected).unwrap();
+                                            }
                                             let can_have_fourstar_focus =
                                                 *banner_type == 0 || *banner_type == 5;
                                             unit.fourstar_focus =
@@ -530,7 +534,7 @@ impl eframe::App for TemplateApp {
                                             banner_units.push(Unit {
                                                 name: "".into(),
                                                 placeholder_name: true,
-                                                color: 0,
+                                                color: Color::Red,
                                                 fourstar_focus: false,
                                             });
                                         }
